@@ -1,0 +1,5 @@
+*.fasta
+*.fastq
+*.log
+README.md.save
+reference_genomes/
