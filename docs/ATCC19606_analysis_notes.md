@@ -1,0 +1,20 @@
+# Análise da Cepa ATCC 19606
+- **Data**: 28/06/2025
+- **Cepa Analisada**: Acinetobacter baumannii ATCC 19606 (GCF_020911985.1)
+- **Genes de Resistência Identificados**:
+  - `sul2`: Resistência a sulfonamidas.
+  - `ant(3'')-IIa`: Resistência a espectinomicina/estreptomicina (aminoglicosídeos).
+  - `blaOXA-98`: β-lactamase classe D, resistência a β-lactâmicos.
+  - `blaADC-158`: β-lactamase classe C, resistência a cefalosporinas.
+- **Classes de Antibióticos Afetadas**:
+  - Sulfonamidas: `sul2`.
+  - Aminoglicosídeos: `ant(3'')-IIa`.
+  - β-lactâmicos: `blaOXA-98`, `blaADC-158`.
+- **Comparação com Outras Cepas**:
+  - **AYE** (`gyrA_S81L`, `blaADC-11`, `blaOXA-69`, `sul1`): ATCC 19606 é menos resistente, sem `gyrA_S81L` ou `sul1`. Compartilha resistência a aminoglicosídeos (`ant(3'')-IIa`).
+  - **AB5075** (`ant(3'')-IIa`, `aph(3')-VIa`, `blaOXA-69`, `blaADC-11`, `gyrA_S81L`, `blaOXA-23`, `sul1`, `qacEdelta1`, `dfrA7`): ATCC 19606 tem perfil mais limitado, sem `blaOXA-23`, `gyrA_S81L`, `dfrA7`. Compartilha `ant(3'')-IIa`.
+  - **ACICU** (`ant(3'')-IIa`, `aac(6')-Ib3`, `blaOXA-20`, `qacEdelta1`, `sul1`, `blaOXA-66`, `blaADC-175`, `gyrA_S81L`, `blaOXA-58`): ATCC 19606 é menos resistente, sem `blaOXA-58`, `gyrA_S81L`, `qacEdelta1`. Compartilha `ant(3'')-IIa`.
+- **Observações/Notas Adicionais**:
+  - ATCC 19606 é uma cepa de referência com resistência moderada, usada como controle.
+  - Verificar ausência de bombas de efluxo (ex.: adeABC).
+  - **Créditos**: Dados genômicos obtidos do NCBI (RefSeq: GCF_020911985.1, BioProject PRJNA704113). Agradecimentos aos autores por tornarem os dados abertos disponíveis.
