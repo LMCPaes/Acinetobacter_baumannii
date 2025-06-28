@@ -1,0 +1,27 @@
+# Análise da Cepa ACICU
+- **Data**: 28/06/2025
+- **Cepa Analisada**: Acinetobacter baumannii ACICU (GCF_005519135.2, ASM551913v2)
+- **Genes de Resistência Identificados**:
+  - `ant(3'')-IIa`: Resistência a espectinomicina/estreptomicina (aminoglicosídeos).
+  - `aac(6')-Ib3`: Resistência a amicacina/kanamicina/tobramicina (aminoglicosídeos).
+  - `blaOXA-20`: β-lactamase classe D, resistência a β-lactâmicos.
+  - `qacEdelta1`: Resistência a compostos quaternários de amônio (biocida).
+  - `sul1`: Resistência a sulfonamidas.
+  - `blaOXA-66`: β-lactamase classe D, resistência a carbapenêmicos (família OXA-51).
+  - `blaADC-175`: β-lactamase classe C, resistência a cefalosporinas.
+  - `gyrA_S81L`: Resistência a quinolonas (mutação em gyrA).
+  - `blaOXA-58`: β-lactamase classe D, resistência a carbapenêmicos.
+- **Classes de Antibióticos Afetadas**:
+  - Aminoglicosídeos: `ant(3'')-IIa`, `aac(6')-Ib3`.
+  - β-lactâmicos: `blaADC-175` (cefalosporinas), `blaOXA-66`, `blaOXA-58` (carbapenêmicos), `blaOXA-20` (outros β-lactâmicos).
+  - Quinolonas: `gyrA_S81L`.
+  - Sulfonamidas: `sul1`.
+  - Biocidas: `qacEdelta1` (compostos quaternários de amônio).
+- **Comparação com Outras Cepas**:
+  - **ATCC 19606** (`sul2`, `ant(3'')-IIa`, `blaOXA-98`, `blaADC-158`): Menos resistente, sem `blaOXA-58`, `blaOXA-20`, `aac(6')-Ib3`, `gyrA_S81L`, `sul1`, `qacEdelta1`. Compartilha `ant(3'')-IIa`.
+  - **AYE** (`gyrA_S81L`, `blaADC-11`, `blaOXA-69`, `sul1`): Perfil semelhante, com `gyrA_S81L` e `sul1`. ACICU adiciona `blaOXA-58`, `blaOXA-20`, `blaOXA-66`, `aac(6')-Ib3`, `qacEdelta1`, mas falta `blaADC-11`.
+  - **AB5075** (`ant(3'')-IIa`, `aph(3')-VIa`, `blaOXA-69`, `blaADC-11`, `gyrA_S81L`, `blaOXA-23`, `sul1`, `qacEdelta1`, `dfrA7`): AB5075 tem perfil mais amplo com `blaOXA-23`, `aph(3')-VIa`, `dfrA7` (trimetoprim). ACICU tem `blaOXA-58`, `blaOXA-20`, `aac(6')-Ib3`.
+- **Observações/Notas Adicionais**:
+  - ACICU é uma cepa MDR do clone global ST-2, associada a surtos hospitalares, com resistência significativa a carbapenêmicos e aminoglicosídeos.
+  - Verificar presença de bombas de efluxo (ex.: adeABC) e regulação por AdeRS.
+  - **Créditos**: Dados genômicos obtidos do NCBI (RefSeq: GCF_005519135.2), disponibilizados pela equipe de sequenciamento do Genoscope (BioProject PRJNA487759). Agradecimentos aos autores por tornarem os dados abertos disponíveis.
