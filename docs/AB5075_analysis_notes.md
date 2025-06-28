@@ -1,0 +1,15 @@
+# Análise da Cepa AB5075
+- **Data**: 27/06/2025
+- **Genes de resistência identificados**:
+  - `ant(3'')-IIa`: Resistência a espectinomicina/estreptomicina (aminoglicosídeos).
+  - `aph(3')-VIa`: Resistência a amicacina/kanamicina (aminoglicosídeos).
+  - `blaOXA-69`: β-lactamase classe D, resistência a carbapenêmicos.
+  - `blaADC-11`: β-lactamase classe C, resistência a cefalosporinas.
+  - `gyrA_S81L`: Resistência a quinolonas (mutação em gyrA).
+  - `blaOXA-23`: β-lactamase classe D, resistência a carbapenêmicos.
+  - `sul1`: Resistência a sulfonamidas.
+  - `qacEdelta1`: Resistência a compostos quaternários de amônio (biocida).
+  - `dfrA7`: Resistência a trimetoprim.
+- **Comparação com AYE**: AB5075 possui perfil MDR mais amplo que AYE (`gyrA_S81L`, `blaADC-11`, `blaOXA-69`, `sul1`), com genes adicionais (`blaOXA-23`, `ant(3'')-IIa`, `aph(3')-VIa`, `qacEdelta1`, `dfrA7`). Ambos são MDR, mas AB5075 (ST-2) é mais virulenta.
+- **Comparação com ATCC 19606**: ATCC 19606 (`sul2`, `blaOXA-98`, `blaADC-158`) é menos resistente, sem `blaOXA-23` ou mutações em gyrA.
+- **Notas**: Verificar presença de bombas de efluxo (ex.: adeABC). Confirmar implicações clínicas para surtos hospitalares.
