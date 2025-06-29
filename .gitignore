@@ -1,4 +1,18 @@
-*.fasta
+# Arquivos de reads brutos e corrigidos, muito grandes para Git
+*.fastq.gz
+*.gz
+
+# Outros arquivos de bioinformática que podem ser grandes
+*.bam
+*.sam
+*.vcf
+*.vcf.gz
+
+# Pastas onde dados temporários ou brutos podem ser armazenados
+*/tmp/
+*/raw_reads/
+*/corrected_reads/
+*/genome_assemblies/SRR33827175_assembly/*.fasta
 *.fastq
 *.log
 README.md.save
