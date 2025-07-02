@@ -1,7 +1,7 @@
 R
 
 # Load necessary libraries
-# Ensure these packages are installed in your R environment:
+# Ensure these packages are installed in your R environment before running the script:
 # install.packages(c("ggplot2", "dplyr", "ggrepel", "pheatmap"))
 
 library(ggplot2)
@@ -10,8 +10,10 @@ library(ggrepel)
 library(pheatmap) # Make sure pheatmap is loaded as it's used for the heatmap
 
 # 1. Define the path to the folder where your .tsv files are located
-# Make sure to use forward slashes (/) or double backslashes (\\) for Windows paths.
-input_files_path <- "C:/Users/Milla/Downloads/" # Adjust this path as needed
+# This path is relative to the root of your project (assuming the R script is executed from the project root
+# or 'code/' subfolder and data is in 'data/amrfinder_results/').
+# Ensure your AMRFinderPlus .tsv files are in 'data/amrfinder_results/' within your repository.
+input_files_path <- "data/amrfinder_results/"
 
 # 2. Load each AMRFinderPlus result file and add a 'Strain' column
 # This allows us to know which strain each gene was identified from.
