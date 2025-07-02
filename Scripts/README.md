@@ -1,5 +1,3 @@
-Okay! Entendido. Vou reescrever o código R, traduzir os comentários e nomes de variáveis para inglês, e também fazer algumas pequenas melhorias para deixá-lo ainda mais claro e fácil de ler, removendo as linhas install.packages().
-
 R
 
 # Load necessary libraries
