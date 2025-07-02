@@ -1,141 +1,21 @@
-R
+Extended Project Description: Genomic Analysis of Multidrug-Resistant Acinetobacter baumannii and Clinical Relevance
+This project, titled "Genomic Analysis of Multidrug-Resistant Acinetobacter baumannii: Antimicrobial Resistance Assessment via Open Data and Clinical Relevance," delves into the critical global health challenge posed by multidrug-resistant (MDR) Acinetobacter baumannii. Leveraging publicly available RNA-seq datasets from the Gene Expression Omnibus (GEO) (specifically GSE62794, GSE218219, and GSE107964), this study aims to elucidate the molecular mechanisms underlying A. baumannii's formidable resistance to clinically relevant antibiotics, including carbapenems and colistin.
 
-# Load necessary libraries
-# Ensure these packages are installed in your R environment:
-# install.packages(c("ggplot2", "dplyr", "ggrepel", "pheatmap"))
+Our methodology involves rigorous quality control, pre-processing, and genomic assembly to accurately identify antimicrobial resistance (AMR) genes. A key focus is the identification and characterization of these genes in relation to the World Health Organization's Global Antimicrobial Resistance and Use Surveillance System (WHO GLASS) target pathogens and mechanisms. By aligning and quantifying gene expression, we pinpoint specific resistance elements, such as carbapenemases (e.g., NDM, OXA, VIM, IMP, GES, KPC) and colistin resistance genes (e.g., mcr), highlighting their prevalence and distribution across different A. baumannii strains.
 
-library(ggplot2)
-library(dplyr)
-library(ggrepel)
-library(pheatmap) # Make sure pheatmap is loaded as it's used for the heatmap
+The project not only provides a comprehensive genomic snapshot of AMR in A. baumannii but also emphasizes the clinical implications of these findings. It contributes valuable insights to the global understanding of resistance patterns and aids in informing more effective infection control strategies and therapeutic interventions against this challenging pathogen.
 
-# 1. Define the path to the folder where your .tsv files are located
-# Make sure to use forward slashes (/) or double backslashes (\\) for Windows paths.
-input_files_path <- "C:/Users/Milla/Downloads/" # Adjust this path as needed
+Future Perspectives: Innovating Beyond Genomic Surveillance
+Looking ahead, this research lays the groundwork for several innovative and impactful extensions:
 
-# 2. Load each AMRFinderPlus result file and add a 'Strain' column
-# This allows us to know which strain each gene was identified from.
+Development of a Molecular Diagnostic Panel: Based on the identified resistance genes (e.g., NDM, OXA, mcr), future work could involve developing rapid real-time PCR or CRISPR-based assays for swift detection of MDR A. baumannii in clinical samples. Validation with data from Brazilian hospitals, considering the high prevalence of A. baumannii in ICUs, would significantly reduce diagnosis time and enable quicker interventions during hospital outbreaks.
 
-# Function to load and add strain name
-load_amr_data <- function(file_name, strain_name, path = input_files_path) {
-  read.delim(paste0(path, file_name), header = TRUE, sep = "\t") %>%
-    mutate(Strain = strain_name)
-}
+Predictive Modeling with Artificial Intelligence: Utilizing the RNA-seq data, machine learning models (e.g., Random Forest, neural networks) could be trained to predict resistance profiles of new A. baumannii strains based on gene expression patterns. Integrating this with epidemiological data from GLASS could further enable the prediction of regional outbreaks, creating a powerful predictive tool for hospital surveillance with global applicability.
 
-data_aye <- load_amr_data("resultados_amrfinder_AYE.tsv", "AYE")
-data_atcc19606 <- load_amr_data("resultados_amrfinder_ATCC19606.tsv", "ATCC19606")
-data_acicu <- load_amr_data("resultados_amrfinder_ACICU.tsv", "ACICU")
-data_ab5075 <- load_amr_data("resultados_amrfinder_AB5075.tsv", "AB5075")
+Multi-Omics Data Integration: Complementing the RNA-seq analysis with proteomic (e.g., via PRIDE) and metabolomic (e.g., via Metabolomics Workbench) data would provide a holistic view of metabolic pathways affected by resistance. Correlating gene expression (transcriptomics) with protein abundance (proteomics) and metabolite profiles (metabolomics) – for instance, linking efflux pump expression to expelled bacterial metabolites – would deepen the understanding of resistance mechanisms and accelerate the discovery of novel therapeutic targets.
 
-# 3. Combine all strain dataframes into a single dataframe
-# The bind_rows function from dplyr is ideal for combining dataframes with the same columns.
-all_amr_genes <- bind_rows(data_aye, data_atcc19606, data_acicu, data_ab5075)
+In Silico Simulations of Novel Antimicrobial Compounds: Employing bioinformatics tools like AutoDock or Rosetta, interactions between novel compounds (e.g., efflux pump inhibitors) and identified molecular targets (e.g., membrane proteins, carbapenemases) could be simulated. This in silico approach would significantly accelerate the development of innovative therapies against extensively drug-resistant (XDR) A. baumannii.
 
-# Optional: View the first rows and structure of the combined dataframe (for your verification)
-# print("First rows of the combined dataframe:")
-# print(head(all_amr_genes))
-# print("Structure of the combined dataframe:")
-# print(str(all_amr_genes))
-# print("Count of genes per strain in the combined dataframe:")
-# print(table(all_amr_genes$Strain))
+Real-time Surveillance Platform: An ambitious future endeavor involves creating an open-source platform that integrates genomic data of A. baumannii (from sources like GEO) with epidemiological information from hospitals (e.g., via ANVISA or GLASS), utilizing APIs for real-time data updates and interactive map visualizations of outbreaks. Such a platform would facilitate rapid responses to hospital-acquired infections and foster international collaboration in combating antimicrobial resistance.
 
-# 4. Define the molecular resistance targets monitored by the WHO GLASS system for Acinetobacter spp.
-# We will use regular expressions to ensure variants (e.g., OXA-23, mcr-1) are captured.
-glass_targets_carbapenem <- c("NDM", "OXA", "VIM", "IMP", "GES", "KPC")
-glass_targets_colistin <- c("mcr") # 'mcr' will capture all variants like mcr-1, mcr-2, etc.
-
-# 5. Add new columns to the dataframe to indicate if a gene is a GLASS target
-# We use grepl() to check for the presence of GLASS target patterns in 'Element.symbol' or 'Element.name' fields.
-# Create a copy to avoid modifying the original dataframe directly.
-all_amr_genes_glass <- all_amr_genes
-
-all_amr_genes_glass <- all_amr_genes_glass %>%
-  mutate(
-    Is_GLASS_Carbapenem = grepl(paste(glass_targets_carbapenem, collapse = "|"), Element.symbol, ignore.case = TRUE) |
-      grepl(paste(glass_targets_carbapenem, collapse = "|"), Element.name, ignore.case = TRUE),
-    Is_GLASS_Colistin = grepl(paste(glass_targets_colistin, collapse = "|"), Element.symbol, ignore.case = TRUE) |
-      grepl(paste(glass_targets_colistin, collapse = "|"), Element.name, ignore.case = TRUE),
-    # A gene is considered a 'GLASS Target' if it's either a carbapenem or colistin target.
-    Is_GLASS_Target = Is_GLASS_Carbapenem | Is_GLASS_Colistin
-  )
-
-# 6. Summarize and Count the GLASS Target Resistance Genes found by Strain
-# Filter only GLASS target genes, group by strain, element symbol, class, and subclass,
-# then count the occurrence of each.
-summary_glass_by_strain <- all_amr_genes_glass %>%
-  filter(Is_GLASS_Target == TRUE) %>%
-  group_by(Strain, Element.symbol, Class, Subclass) %>%
-  summarise(Count = n(), .groups = 'drop') %>%
-  arrange(Strain, desc(Count)) # Order for easier visualization
-
-# Count the number of *unique* GLASS genes found in each strain
-count_unique_glass_by_strain <- all_amr_genes_glass %>%
-  filter(Is_GLASS_Target == TRUE) %>%
-  group_by(Strain) %>%
-  summarise(Unique_GLASS_Genes = n_distinct(Element.symbol), .groups = 'drop')
-
-# 7. Print results for your review
-print("--- ANALYSIS RESULTS ---")
-
-print("First rows of the dataframe with GLASS Target identification:")
-print(head(all_amr_genes_glass[, c("Strain", "Element.symbol", "Class", "Subclass", "Is_GLASS_Carbapenem", "Is_GLASS_Colistin", "Is_GLASS_Target")]))
-
-print("\nResistance Genes (GLASS Targets) found by Strain and their count:")
-print(summary_glass_by_strain)
-
-print("\nUnique GLASS Genes count per Strain:")
-print(count_unique_glass_by_strain)
-
-# --- Plot 1: Bar Chart of Unique GLASS Resistance Genes per Strain ---
-ggplot(count_unique_glass_by_strain, aes(x = reorder(Strain, -Unique_GLASS_Genes), y = Unique_GLASS_Genes, fill = Strain)) +
-  geom_bar(stat = "identity", color = "black") +
-  # geom_text line removed to not display numbers on top of bars
-  labs(
-    #title = "Count of Unique GLASS Target Resistance Genes per Strain", # Uncomment to add title
-    x = "Strain",
-    y = "Number of Unique GLASS Genes"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14, margin = margin(t = 10, b = 10)),
-    axis.title = element_text(size = 12, face = "bold"),
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "none",
-    plot.margin = unit(c(1, 1, 1, 1), "cm")
-  )
-
-# --- Plot 2: Heatmap of Presence/Absence of Specific GLASS Genes by Strain ---
-
-# Prepare data for the heatmap
-glass_genes_present <- all_amr_genes_glass %>%
-  filter(Is_GLASS_Target == TRUE) %>%
-  select(Strain, Element.symbol) %>%
-  distinct()
-
-heatmap_matrix <- table(glass_genes_present$Element.symbol, glass_genes_present$Strain)
-
-heatmap_df <- as.data.frame.matrix(heatmap_matrix)
-heatmap_df_numeric <- as.matrix(heatmap_df)
-heatmap_df_numeric[heatmap_df_numeric >= 1] <- 1
-
-# Define colors for the heatmap
-heatmap_colors <- c("white", "darkgreen") # White for absent, Dark green for present
-
-# Create the Heatmap with legend adjustments
-pheatmap(
-  heatmap_df_numeric,
-  color = heatmap_colors,
-  cluster_rows = FALSE,
-  cluster_cols = FALSE,
-  #main = "Presence/Absence of GLASS Target Resistance Genes per Strain", # Uncomment to add title
-  fontsize_row = 10,
-  fontsize_col = 10,
-  display_numbers = TRUE, # Display 0s and 1s in the cell
-  # Legend adjustments:
-  # Explicitly define breaks and labels for the legend
-  legend_breaks = c(0, 1),
-  legend_labels = c("Absent", "Present"),
-  legend = TRUE, # Ensure legend is displayed
-  # Adjust general font size to better accommodate elements, including title and legend
-  fontsize = 12
-)
+This project embodies a commitment to open science and reproducibility, with all analysis scripts and relevant documentation available on GitHub to ensure transparency and enable future research.
